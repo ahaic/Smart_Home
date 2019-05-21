@@ -1,32 +1,37 @@
 import cv2,logging
-from time import gmtime, strftime, time,sleep,strftime,configparser
+from time import gmtime, strftime, time,sleep,strftime
+import configparser
 
 interval = 30
 frames=6000
+
+
 logging.basicConfig(format='%(asctime)s %(message)s',
-                    filename='/var/www/html/h5ai/timelapse/camera.log',
+                    filename='/Users/Xiu/github/smart_camera/camera.log',
                     level=logging.WARNING)
+
+logger = logging.getLogger(__name__)
 
 #filepath = "/Users/Xiu/Desktop/timelapse/%s.jpg" % datetime.now.strftime("%Y-%m-%d-%H:%M:%S")
 #filepath = "/home/pi/timelapse/%s.png" % strftime("%Y-%m-%d-%H:%M:%S")
-
 
 def load_config():
 
 # load configuration file and return the camer link
     config = configparser.ConfigParser()
     conf_file = "camera.conf"
-    print("- Load config file")
+#    print("- Load config file")
     config.read(conf_file)
 
 
-    return (config['Camera_1']['link'])
-
+    return (config['Camera_3']['link'])
 
 
 def connection():
     try:
-        cap = cv2.VideoCapture(load_config())
+        url=load_config()
+        print('url=',url,type(url))
+        cap = cv2.VideoCapture(url)
         while (cv2.VideoCapture.isOpened(cap)):
             ret, image = cap.read()
             #del(cap)
@@ -37,10 +42,13 @@ def connection():
         logger.debug('exception error')
 
 
+
+
+
 def capture():
     ret,image=connection()
     if (ret==True):
-        cv2.imwrite("/var/www/html/h5ai/timelapse/%s.jpg" % strftime("%Y-%m-%d-%H:%M:%S"), image)
+        cv2.imwrite("/Users/Xiu/github/smart_camera/%s.jpg" % strftime("%Y-%m-%d-%H:%M:%S"), image)
     else:
         #print('release camera and capture again')
         logger.debug('release camera and capture again')
@@ -55,7 +63,6 @@ def photo_upload():
 
 def face_recognition():
     pass
-
 
 
 
