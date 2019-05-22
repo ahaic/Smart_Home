@@ -20,19 +20,25 @@ def load_config():
 # load configuration file and return the camer link
     config = configparser.ConfigParser()
     conf_file = "camera.conf"
-#    print("- Load config file")
+    print("- Load config file")
     config.read(conf_file)
+    interval = config['settings']['interval']
+    frames = config['settings']['frames']
+    link = config['Camera_3']['link']
+    return interval,frames,link
 
 
-    return (config['Camera_3']['link'])
 
 
 def connection():
     try:
-        url=load_config()
-        print('url=',url,type(url))
-        cap = cv2.VideoCapture(url)
+        interval,frames,link=load_config()
+        cap = cv2.VideoCapture(link)
+#        print(cap.isOpened())
+
         while (cv2.VideoCapture.isOpened(cap)):
+            print("camera connection establised")
+
             ret, image = cap.read()
             #del(cap)
             return ret,image
@@ -40,9 +46,6 @@ def connection():
             logger.error('error connection....')
     except:
         logger.debug('exception error')
-
-
-
 
 
 def capture():
@@ -68,7 +71,7 @@ def face_recognition():
 
 if __name__ == '__main__':
     print('initializing.....')
-    for i in range(frames):
+    for i in range(100):
         capture()
         print('this is' ,i ,'@', strftime("%Y-%m-%d-%H:%M:%S"),'photos')
-        sleep(interval)
+        sleep(20)
