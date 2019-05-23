@@ -30,14 +30,15 @@ def load_config():
 
 
 
-def connection():
+def connection(link):
     try:
-        interval,frames,link=load_config()
+        #interval,frames,link=load_config()
+
         cap = cv2.VideoCapture(link)
 #        print(cap.isOpened())
 
         while (cv2.VideoCapture.isOpened(cap)):
-            print("camera connection establised")
+            #print("camera connection establised")
 
             ret, image = cap.read()
             #del(cap)
@@ -48,8 +49,8 @@ def connection():
         logger.debug('exception error')
 
 
-def capture():
-    ret,image=connection()
+def capture(link):
+    ret,image=connection(link)
     if (ret==True):
         cv2.imwrite("/Users/Xiu/github/smart_camera/%s.jpg" % strftime("%Y-%m-%d-%H:%M:%S"), image)
     else:
@@ -71,7 +72,9 @@ def face_recognition():
 
 if __name__ == '__main__':
     print('initializing.....')
-    for i in range(100):
-        capture()
+    interval,frames,link=load_config()
+
+    for i in range(int(frames)):
+        capture(link)
         print('this is' ,i ,'@', strftime("%Y-%m-%d-%H:%M:%S"),'photos')
-        sleep(20)
+        sleep(int(interval))
