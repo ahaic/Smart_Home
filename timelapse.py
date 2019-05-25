@@ -4,15 +4,12 @@ import configparser
 import os
 
 
-
 logging.basicConfig(format='%(asctime)s %(message)s',
-                    filename='/Users/Xiu/github/smart_camera/camera.log',
-                    level=logging.WARNING)
-
+                        filename=os.getcwd()+'camera.log',
+                        level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
-#filepath = "/Users/Xiu/Desktop/timelapse/%s.jpg" % datetime.now.strftime("%Y-%m-%d-%H:%M:%S")
-#filepath = "/home/pi/timelapse/%s.png" % strftime("%Y-%m-%d-%H:%M:%S")
+
 
 def load_config():
 
@@ -61,7 +58,7 @@ def connection(link):
 def capture(link,dir):
     ret,image=connection(link)
     if (ret==True):
-        cv2.imwrite(os.path.join(dir,strftime("%Y-%m-%d-%H:%M:%S")+'.jpg'), image)
+        cv2.imwrite(os.path.join(dir,strftime("%Y-%m-%d %H-%M-%S")+'.jpg'), image)
     else:
         #print('release camera and capture again')
         logger.debug('release camera and capture again')
@@ -82,7 +79,6 @@ def face_recognition():
 if __name__ == '__main__':
     print('initializing.....')
     interval,frames,link,dir=load_config()
-
 
     for i in range(int(frames)):
         capture(link,dir)
