@@ -1,9 +1,8 @@
 import cv2,logging
 from time import gmtime, strftime, time,sleep,strftime
 import configparser
+import os
 
-interval = 30
-frames=6000
 
 
 logging.basicConfig(format='%(asctime)s %(message)s',
@@ -25,7 +24,17 @@ def load_config():
     interval = config['settings']['interval']
     frames = config['settings']['frames']
     link = config['Camera_3']['link']
-    return interval,frames,link
+    dir = config['settings']['dir']
+    if bool(dir):
+        return interval,frames,link,dir
+    else:
+        dir = os.getcwd()
+        return interval,frames,link,dir
+
+
+
+    #print(interval,frames,link,dir)
+
 
 
 
@@ -49,10 +58,10 @@ def connection(link):
         logger.debug('exception error')
 
 
-def capture(link):
+def capture(link,dir):
     ret,image=connection(link)
     if (ret==True):
-        cv2.imwrite("/Users/Xiu/github/smart_camera/%s.jpg" % strftime("%Y-%m-%d-%H:%M:%S"), image)
+        cv2.imwrite(os.path.join(dir,strftime("%Y-%m-%d-%H:%M:%S")+'.jpg'), image)
     else:
         #print('release camera and capture again')
         logger.debug('release camera and capture again')
@@ -72,9 +81,10 @@ def face_recognition():
 
 if __name__ == '__main__':
     print('initializing.....')
-    interval,frames,link=load_config()
+    interval,frames,link,dir=load_config()
+
 
     for i in range(int(frames)):
-        capture(link)
+        capture(link,dir)
         print('this is' ,i ,'@', strftime("%Y-%m-%d-%H:%M:%S"),'photos')
         sleep(int(interval))
