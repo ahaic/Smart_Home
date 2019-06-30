@@ -1,3 +1,6 @@
+# works on python 3.6 Mac
+
+
 import cv2,logging
 from time import gmtime, strftime, time,sleep,strftime
 import configparser
@@ -20,7 +23,7 @@ def load_config():
     config.read(conf_file)
     interval = config['settings']['interval']
     frames = config['settings']['frames']
-    link = config['Camera_3']['link']
+    link = config['Camera_2']['link']
     dir = config['settings']['dir']
     if bool(dir):
         return interval,frames,link,dir
@@ -29,12 +32,7 @@ def load_config():
         return interval,frames,link,dir
 
 
-
     #print(interval,frames,link,dir)
-
-
-
-
 
 def connection(link):
     try:
@@ -79,6 +77,8 @@ def face_recognition():
 if __name__ == '__main__':
     print('initializing.....')
     interval,frames,link,dir=load_config()
+    print('reading camera from ',link)
+    print('save files in ',dir)
 
     for i in range(int(frames)):
         capture(link,dir)
