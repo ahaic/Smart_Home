@@ -9,7 +9,7 @@ import configparser
 import os
 
 logging.basicConfig(format='%(asctime)s %(message)s',
-                        filename=os.getcwd()+'camera.log',
+                        filename='camera.log',
                         level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ class camera():
         config = configparser.ConfigParser()
         conf_file = "camera.conf"
         print("- Load config file")
-        config.read(conf_file)
+        config.read(conf_file,encoding='utf-8')
         interval = config['settings']['interval']
         frames = config['settings']['frames']
         link = config['Camera_2']['link']
@@ -62,7 +62,7 @@ class camera():
 
 if __name__ == '__main__':
     print('initializing.....')
-    x= camera(2) 
+    x= camera(2)
     print('reading camera position from ',x.id)
     print('save files in ',x.dir)
 
