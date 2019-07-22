@@ -1,1 +1,46 @@
 
+/decoder_control.cgi?command=&onestep=&sit=&user=&pwd=&next_url=
+
+
+参数：
+onestep=0：指明云台操作为单步操作即停止，只针对自带ptz 功能的型号并且只适用
+于上、下、左、右操作。
+
+command：解码器操作命令：
+命令代码          命令字    说明
+CMD_PTZ_UP         0        上
+CMD_PTZ_UP_STOP     1       上停
+CMD_PTZ_DOWN        2          下
+CMD_PTZ_DOWN_STOP   3        下停
+CMD_PTZ_LEFT 4 左
+IPCAM(H264/JPEG)
+CMD_PTZ_LEFT_STOP 5 左停
+CMD_PTZ_RIGHT 6 右
+CMD_PTZ_RIGHT_STOP 7 右停
+CMD_PTZ_CENTER 25 居中
+CMD_PTZ_UP_DOWN 26 上下
+CMD_PTZ_UP_DOWN_STOP 27 上下停
+CMD_PTZ_LEFT_RIGHT 28 左右
+CMD_PTZ_LEFT_RIGHT_STOP 29 左右停
+CMD_PTZ_PREFAB_BIT_SET0 30 设置预置位1
+CMD_PTZ_PREFAB_BIT_RUN0 31 调用预置位1
+…
+CMD_PTZ_PREFAB_BIT_SETF 60 设置预置位16
+CMD_PTZ_PREFAB_BIT_RUNF 61 调用预置位16
+CMD_PTZ_LEFT_UP 90 左上
+CMD_PTZ_RIGHT_UP 91 右下
+CMD_PTZ_LEFT_DOWN 92 左下
+CMD_PTZ_RIGHT_DOWN 93 右下
+CMD_PTZ_IO_HIGH 94 IO 输出高
+CMD_PTZ_IO_LOW 95 IO 输出低
+CMD_PTZ_MOTO_TEST 255 测试马达
+3、设备基本参数
+camera_control.cgi
+描述：图像传感器参数控制
+权限：访客
+语法：/camera_control.cgi?param=&value=&user=&pwd=&next_url=
+参数：
+param：参数类型
+value：参数值
+蓝色表示暂不支持，己经移到set_media
+Param
